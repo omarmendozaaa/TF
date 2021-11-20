@@ -1,0 +1,116 @@
+.sidebar {
+  position: absolute;
+  width: 210px;
+  height: 100%;
+  box-sizing: initial;
+  background: #57419d;
+  transition: 850ms;
+  z-index: 1;
+}
+.sidebar.active {
+  transition: 350ms;
+  width: 80px;
+}
+.sidebar ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+.sidebar ul li {
+  position: relative;
+  list-style: none;
+  width: 100%;
+}
+
+.sidebar ul li a {
+  position: relative;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+}
+.sidebar ul li a .icon {
+  position: relative;
+  min-width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f5c384;
+}
+.sidebar ul li a .icon ion-icon {
+  font-size: 1.5em;
+}
+.sidebar ul li a .title {
+  position: relative;
+  display: block;
+  height: 60px;
+  white-space: normal;
+  display: flex;
+  align-items: center;
+  color: #eef3ff;
+  transition: 850ms;
+}
+.sidebar ul li a .title:hover {
+  color: #f5c384;
+}
+
+.sidebar.active ul li a .icon:hover {
+  color: #fff;
+}
+.sidebar ul li a .title.active {
+  opacity: 0;
+  animation: fadeIn linear 7s;
+  transition: 350ms;
+  visibility: hidden;
+}
+
+.list {
+  position: relative;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+}
+.logo-icon {
+  position: absolute;
+  padding-left: 50px;
+  padding-top: 30px;
+  display: flex;
+  color: #f5c384;
+}
+.logo-icon ion-icon {
+  font-size: 2.5em;
+}
+.logo-title {
+  padding-left: 100px;
+  padding-top: 40px;
+  position: relative;
+  display: block;
+  white-space: normal;
+  color: #eef3ff;
+  font-weight: 600;
+  font-size: large;
+}
+
+.MainIcon {
+  display: flex;
+  padding-left: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  justify-content: center;
+}
+.MainIcon.active {
+  padding-right: 10px;
+}
+.Icon {
+  height: 50px;
+  pointer-events: auto;
+}
+
+@media (max-width: 500px) {
+  .sidebar.active {
+    left: -100px;
+  }
+}

@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, BrowserRouter, Routes } from "react-router-dom";
+import "./App.css";
+import Dashboard from "./pages/Dashboard";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Navbar from "./components/Navbar/Navbar";
+import { useState } from "react";
+import Registros from "./pages/Registros";
+import Reportes from "./pages/Reportes";
 
 function App() {
+  const [sidebar, setSidebar] = useState(true);
+  const [RolId, setRolId] = useState(1);
+  
+  const showSidebar = () => setSidebar(!sidebar);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Sidebar sidebar={sidebar} showSidebar={showSidebar} />
+      <Navbar showSidebar={showSidebar} setRolId = {setRolId}/>
+      <Routes>
+        <Route path="/" element={<Dashboard RolId = {RolId}/>} />
+        <Route path="/registros" element={<Registros RolId = {RolId}/>} />
+        <Route path="/reportes" element={<Reportes RolId = {RolId}/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
