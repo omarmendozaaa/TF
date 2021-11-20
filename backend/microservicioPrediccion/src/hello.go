@@ -185,3 +185,8 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(":9000", router))
 }
+
+
+func calcularY(m, c, pm10 float64)(float64){
+	return m*pm10 + c
+}
