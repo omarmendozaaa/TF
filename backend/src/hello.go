@@ -219,3 +219,104 @@ func main() {
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
+
+type xy struct{ x, y float64 }
+
+func leerCSVdesdeURL(url string) ([]xy, error) {
+	var xys2 []xy
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	reader := csv.NewReader(resp.Body)
+	reader.Comma = ','
+	c := 0
+	for {
+		record, err := reader.Read()
+		if c == 0 {
+			c = c + 1
+			continue
+		}
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		x, _ := strconv.ParseFloat(record[10], 64)
+		y, _ := strconv.ParseFloat(record[11], 64)
+		xys2 = append(xys2, xy{x, y})
+	}
+	return xys2, nil
+}
+
+func entrenamiento(path string, xys []xy) error {
+	f, err := os.Create(path)
+	if err != nil {
+		return fmt.Errorf("no se puede crear el archivo %s: %v", path, err)
+	}
+
+	p := plot.New()
+	if err != nil {
+		return fmt.Errorf("no se puede escribir: %v", err)
+	}
+
+	pxys := make(plotter.XYs, len(xys))
+	for i, xy := range xys {
+		pxys[i].X = xy.x
+		pxys[i].Y = xy.y
+	}
+	s, err := plotter.NewScatter(pxys)
+	if err != nil {
+		return fmt.Errorf("no se puede crear el grafico: %v", err)
+	}
+	s.GlyphStyle.Shape = draw.CrossGlyph{}
+	s.Color = color.RGBA{R: 255, A: 255}
+	p.Add(s)
+
+	//Start Linear Regression
+	x, c := linearRegression(pxys, 0.01)
+	slopeIntercept.ValueC = fmt.Sprintf("%f", c)
+	slopeIntercept.ValueM = fmt.Sprintf("%f", x)
+	l, err := plotter.NewLine(plotter.XYs{
+		//3 y 20 son valores de x
+		{1, 1*x + c}, {20, 20*x + c},
+		//{1, 0.2871704653772158*1 + 0.7724178211649133}, {20, 0.2871704653772158*20 + 0.7724178211649133},
+	})
+	if err != nil {
+		return fmt.Errorf("could not create line: %v", err)
+	}
+	p.Add(l)
+	//End Linear Regression
+
+	wt, _ := p.WriterTo(356, 356, "png")
+	_, _ = wt.WriteTo(f)
+	defer f.Close()
+	return nil
+}
+
+func linearRegression(xys plotter.XYs, alpha float64) (m, c float64) {
+	for i := 0; i < 1000; i++ {
+		dm, dc := gradienteDescendiente(xys, m, c)
+		m += -dm * alpha
+		c += -dc * alpha
+		//fmt.Printf("grad(%.2f, %.2f) = (%.2f, %.2f)\n", m, c, dm, dc)
+	}
+
+	return m, c
+}
+
+func gradienteDescendiente(xys plotter.XYs, pendiente, intercepto float64) (dp, di float64) {
+	for _, xy := range xys {
+		d := xy.Y - (xy.X*pendiente + intercepto)
+		dp += -xy.X * d
+		di += -d
+	}
+
+	n := float64(len(xys))
+	return 2 / n * dp, 2 / n * di
+
+}
