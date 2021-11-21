@@ -209,7 +209,7 @@ function Predict() {
         </ModalFooter>
       </Modal>
       {/* MODAL */}
-      <Modal isOpen={modalEditar} toggle={modalEditar}>
+      <Modal isOpen={modalEditar} toggle={toggleEditar}>
         <ModalHeader toggle={toggleEditar}>Editar Registro</ModalHeader>
         <ModalBody>
           <Row>
@@ -239,7 +239,7 @@ function Predict() {
         </ModalFooter>
       </Modal>
       {/* MODAL */}
-      <Modal isOpen={modalDetalle} toggle={modalDetalle}>
+      <Modal isOpen={modalDetalle} toggle={toggleDetalle}>
         <ModalHeader toggle={toggleDetalle}>Editar Registro</ModalHeader>
         <ModalBody>
           <Row>
