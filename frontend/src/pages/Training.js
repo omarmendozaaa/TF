@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { Button, ButtonGroup, Col, Form, Input, Row, Table } from "reactstrap";
+import { Button, ButtonGroup, Table } from "reactstrap";
 import Content from "../components/Content/Content";
 import {
   GetAllRegisters,
+  GetTraining,
 } from "../Services/Registers/RegisterService";
 import RegistroModal from "./Modals/RegistroModal";
 
-function Registros() {
-
+function Training() {
   const [registros, setRegistros] = useState([]);
   const [idRegistro, setIdRegistro] = useState();
 
@@ -16,16 +16,37 @@ function Registros() {
   const [modalDetalle, setModalDetalle] = useState(false);
   const [modalEliminar, setModalEliminar] = useState(false);
 
-  const toggleAgregar = () => setModalAgregar(!modalAgregar);
-  const toggleEditar = (idregistro) => {setModalEditar(!modalEditar); setIdRegistro(idregistro)}
-  const toggleDetalle = (idregistro) => {setModalDetalle(!modalDetalle);  setIdRegistro(idregistro)}
-  const toggleEliminar = (idregistro) => {setModalEliminar(!modalEliminar); setIdRegistro(idregistro)}
+  const [mx, setMx] = useState({ m: "", c: "" });
 
-  useEffect(() => {
+  const toggleAgregar = () => setModalAgregar(!modalAgregar);
+
+  const toggleEditar = (idregistro) => {
+    setModalEditar(!modalEditar);
+    setIdRegistro(idregistro);
+  };
+  const toggleDetalle = (idregistro) => {
+    setModalDetalle(!modalDetalle);
+    setIdRegistro(idregistro);
+  };
+  const toggleEliminar = (idregistro) => {
+    setModalEliminar(!modalEliminar);
+    setIdRegistro(idregistro);
+  };
+
+  const Entrenar = () =>
+    GetTraining().then((mx) => {
+      setMx(mx);
+    });
+
+  const fetchData = () =>
     GetAllRegisters().then((registros) => {
       setRegistros(registros);
     });
-  }, [registros]);
+
+  useEffect(() => {
+    fetchData();
+    Entrenar();
+  }, [idRegistro, modalAgregar]);
 
   return (
     <div>
@@ -54,28 +75,23 @@ function Registros() {
       ></RegistroModal>
 
       <div className="page-content">
-        <Content site="Predicción" modulo="Registros" />
+        <Content site="Entrenamiento" modulo="Registros" />
         <div className="page-component">
-          <div className="agregar-registro">
-            <Button color="primary" onClick={toggleAgregar}>
+          <div style={{ marginBottom: "10px" }}>
+            <Button
+              style={{ backgroundColor: "#57419d" }}
+              size="sm"
+              onClick={toggleAgregar}
+            >
               + Agregar Registro
-            </Button>
-            <Form>
-              <Row>
-                <Col>
-                  <Input
-                    type="text"
-                    name="filtroregistro"
-                    id="filtroregistro"
-                    placeholder="Buscar registros"
-                  />
-                </Col>
-              </Row>
-            </Form>
+            </Button>{" "}
+            <span
+              style={{ marginLeft: "10px" }}
+            >{`M: ${mx.m} C: ${mx.c}`}</span>
           </div>
-          <Table responsive>
+          <Table borderless responsive size="sm" striped>
             <thead>
-              <tr>
+              <tr style={{ textAlign: "center" }}>
                 <th>Id</th>
                 <th>Fecha</th>
                 <th>CO</th>
@@ -94,7 +110,7 @@ function Registros() {
             </thead>
             <tbody>
               {registros.map((registro) => (
-                <tr key={registro.id}>
+                <tr key={registro.id} style={{ textAlign: "center" }}>
                   <td>{registro.id}</td>
                   <td>{registro.fecha}</td>
                   <td>{registro.co}</td>
@@ -109,16 +125,25 @@ function Registros() {
                   <td>{registro.presion}</td>
                   <td>{registro.temperatura}</td>
                   <td>
-                    <ButtonGroup>
+                    <ButtonGroup size="sm">
                       {" "}
-                      <Button color="primary" onClick={() => toggleDetalle(registro.id)}>
+                      <Button
+                        style={{ backgroundColor: "#57419d" }}
+                        onClick={() => toggleDetalle(registro.id)}
+                      >
                         {" "}
                         Detalle{" "}
                       </Button>{" "}
-                      <Button color="primary" onClick={() => toggleEditar(registro.id)}>
+                      <Button
+                        style={{ backgroundColor: "#57419d" }}
+                        onClick={() => toggleEditar(registro.id)}
+                      >
                         <ion-icon name="create-outline"></ion-icon>
                       </Button>{" "}
-                      <Button color="primary" onClick={() => toggleEliminar(registro.id)}>
+                      <Button
+                        style={{ backgroundColor: "#57419d" }}
+                        onClick={() => toggleEliminar(registro.id)}
+                      >
                         <ion-icon name="trash-outline"></ion-icon>
                       </Button>
                     </ButtonGroup>
@@ -133,4 +158,4 @@ function Registros() {
   );
 }
 
-export default Registros;
+export default Training;

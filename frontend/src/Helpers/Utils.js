@@ -1,8 +1,7 @@
-const EsAcademico = (IdRol) => {
+export const EsEntrenamiento = (IdRol) => {
     if(IdRol === 1){
         return true;
     }else{
         return false;
     }
 }
-export default EsAcademico

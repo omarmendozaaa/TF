@@ -7,9 +7,6 @@ export const GetAllRegisters = () => {
       const { data } = response;
       return data;
     })
-    .catch((err) => {
-      console.error(err);
-    });
 };
 
 export const GetRegisterById = (Id) => {
@@ -58,4 +55,13 @@ export const DeleteRegister = (Id) => {
     .catch((err) => {
       console.error(err);
     });
+};
+
+export const GetTraining = () => {
+  return axios
+    .get("http://localhost:8000/training")
+    .then((response) => {
+      const { data } = response;
+      return data;
+    })
 };

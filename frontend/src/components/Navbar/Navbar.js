@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { RolesData } from "./RolesData";
 import mainicon from "./party-popper.png";
 
-function Navbar({ showSidebar, setRolId}) {
+function Navbar({ showSidebar, changeRol}) {
   return (
     <header className="header">
       <div className=".MainIconNav" onClick={showSidebar}>
@@ -12,11 +12,11 @@ function Navbar({ showSidebar, setRolId}) {
       <div className="evento">
         <select
           className="custom-select form-control select-evento"
-          onChange={(e)=> {setRolId(e.target.value)}}
+          onChange={(e)=> {changeRol(e.target.value)}}
         >
           {RolesData.map((item) => {
             return (
-              <option key={item.id} value={item.id}>{item.nombre}</option>
+              <option key={item.id} value={item.id} >{item.nombre}</option>
             );
           })}
         </select>

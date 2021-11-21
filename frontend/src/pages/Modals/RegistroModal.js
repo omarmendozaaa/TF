@@ -38,7 +38,7 @@ function RegistroModal({ modal, toggle, tipo, idRegistro }) {
         <ModalHeader toggle={toggle}>Agregar Registro</ModalHeader>
         <ModalCustomBody SetRegistro = {SetRegistro} registro = {registro} canedit={true} empty={true}></ModalCustomBody>
         <ModalFooter>
-          <Button color="primary" onClick={AgregarRegistro}>
+          <Button style={{backgroundColor: '#57419d'}} onClick={AgregarRegistro}>
             Aceptar
           </Button>{" "}
           <Button color="secondary" onClick={toggle}>
@@ -53,7 +53,7 @@ function RegistroModal({ modal, toggle, tipo, idRegistro }) {
         <ModalHeader toggle={toggle}>Editar Registro</ModalHeader>
         <ModalCustomBody  SetRegistro = {SetRegistro} registro = {registro} canedit={true} empty={false}></ModalCustomBody>
         <ModalFooter>
-          <Button color="primary" onClick={EditarRegistro}>
+          <Button style={{backgroundColor: '#57419d'}} onClick={EditarRegistro}>
             Aceptar
           </Button>{" "}
           <Button color="secondary" onClick={toggle}>
@@ -68,7 +68,7 @@ function RegistroModal({ modal, toggle, tipo, idRegistro }) {
         <ModalHeader toggle={toggle}>Detalle</ModalHeader>
         <ModalCustomBody  SetRegistro = {SetRegistro} registro = {registro} empty={false} canedit={false}></ModalCustomBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>
+          <Button style={{backgroundColor: '#57419d'}} onClick={toggle}>
             Aceptar
           </Button>{" "}
         </ModalFooter>
@@ -84,7 +84,7 @@ function RegistroModal({ modal, toggle, tipo, idRegistro }) {
         <Button color="danger" onClick={EliminarRegistro}>
           Aceptar
         </Button>{" "}
-        <Button color="primary" onClick={toggle}>
+        <Button style={{backgroundColor: '#57419d'}} onClick={toggle}>
           Cancelar
         </Button>{" "}
       </ModalFooter>

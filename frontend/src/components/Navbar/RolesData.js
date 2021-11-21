@@ -1,10 +1,10 @@
 export const RolesData = [
     {
         id: 1,
-        nombre: "Académico",
+        nombre: "Entrenamiento",
     },
     {
         id: 2,
-        nombre: "Administrador",
+        nombre: "Predicción",
     }
 ]
