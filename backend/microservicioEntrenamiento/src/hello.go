@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -8,9 +9,11 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 	"gonum.org/v1/plot"
@@ -88,16 +91,43 @@ func getReady(w http.ResponseWriter, r *http.Request) {
 	slopeIntercept.ValueC = "0"
 	slopeIntercept.ValueM = "0"
 
-	url := "https://raw.githubusercontent.com/omarmendozaaa/TF/Future/dataset/SI_contaminacion.csv"
+	// url := "https://raw.githubusercontent.com/omarmendozaaa/TF/Future/dataset/SI_contaminacion.csv"
 
-	var dataMatrix []xy
-	dataMatrix, _ = leerCSVdesdeURL(url)
-	//Tengo que ver si el usuario ha ingresado nuevos registros para el train
+	// var dataMatrix []xy
+	// dataMatrix, _ = leerCSVdesdeURL(url)
 
-	err := entrenamiento("out.png", dataMatrix)
-	if err != nil {
-		log.Fatalf("Could not plot data: %v", err)
+	//Enviando al nodo
+	/*con, _ := net.Dial("tcp", "localhost:9081")
+	defer con.Close()
+
+	var arreglosNumeros []float64
+	for _, reg := range dataMatrix {
+		arreglosNumeros = append(arreglosNumeros, reg.x)
+		arreglosNumeros = append(arreglosNumeros, reg.y)
 	}
+
+	encoder := gob.NewEncoder(con)
+	encoder.Encode(arreglosNumeros)*/
+	//Fin del envío al nodo
+
+	//Recibiendo datos
+	ln, _ := net.Listen("tcp", "localhost:8001")
+	defer ln.Close()
+	con2, _ := ln.Accept()
+	defer con2.Close()
+	re := bufio.NewReader(con2)
+	msg, _ := re.ReadString('\n')
+	fmt.Printf("Recibido: %s", msg)
+	//Fin del listen
+
+	//Tengo que ver si el usuario ha ingresado nuevos registros para el train
+	// err := entrenamiento("out.png", dataMatrix)
+	// if err != nil {
+	// 	log.Fatalf("Could not plot data: %v", err)
+	// }
+	result := strings.Split(msg, " ")
+	slopeIntercept.ValueC = strings.TrimSpace(result[0])
+	slopeIntercept.ValueM = strings.TrimSpace(result[1])
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(slopeIntercept)

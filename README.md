@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Predicción de la Contaminación del Aire con Regresión Lineal Simple 🤖
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Monitoreo y control de la predicción de los niveles de las partículas respirables (PM2.5/PM10) identificadas por las etiquetas que tenemos, las cuales representaran los diferentes distritos que hay en lima metropolitana.
 
-## Available Scripts
+## Introducción
 
-In the project directory, you can run:
+El Servicio Nacional de Meteorología e Hidrología del Perú ha realizado una investigación durante el mes de marzo del año 2021, para obtener los parámetros contaminantes y meteorológicos. La investigación que se presentará es acerca de la contaminación ambiental que se da en el Perú, exactamente en el departamento de Lima, por lo que nuestro objetivo es predecir o estimar resultados para el monitoreo de los niveles de contaminación teniendo en cuenta ciertos parámetros como hora, lugar y entre otros.
+Utilizaremos regresión lineal simple, el cual es un algoritmo de aprendizaje supervisado que se utiliza en machine learning. Por otro lado, se presentará una arquitectura de diseño y el sprint backlog.
 
-### `npm start`
+## Motivación
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación del aire, por eso hemos encontrado distintos problemas en diferentes ámbitos los cuales afectan negativamente a muchos peruanos diariamente, los cuales son los siguientes:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<ol>
+  <li>Salud: Las consecuencias en la salud, las partículas PM2.5 y PM10 encontradas en el aire en los distintos distritos de Lima a ciertas horas del día como SO2, NO2, O3 y CO, repercuten negativamente en la salud cuando una persona se expone mucho a estas partículas, por eso una de nuestras motivaciones es poder saber que tan dañinas son estas cantidades de partículas a las que una persona está expuesta y que medidas deberían ser tomadas al respecto.</li>
+  <li>Económico: Al ser Lima la capital de nuestro país, el que este contaminada con este tipo de partículas es algo que impacta negativamente en campos como el turismo que tienen gran impacto en nuestra economía, por eso nuestra motivación en este ámbito sería el poder saber que distritos son los más contaminados y tomar medidas al respecto para no tener efectos negativos en el turismo y demás actividades económicas.</li>
+  <li>Social: La contaminación del aire al ser un problema de salud afecta a la calidad de vida de todos los ciudadanos residentes de los distintos distritos de Lima, nuestra motivación en este aspecto es el poder mejorar la calidad de vida erradicando o controlando el problema de la contaminación.</li>
+</ol>
 
-### `npm test`
+## Arquitectura
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![  ](https://i.ibb.co/LtW5RXt/Dise-o-de-arquitectura.png)
 
-### `npm run build`
+### 1. Inicializar Microservicios
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### `go run hello.go`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    Nos dirigimos a la siguiente ruta: ./backend/microservicioEntrenamiento/ y ejecutamos "go run hello.go"
+    Esto comenzará el servicio de entrenamiento
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    Nos dirigimos a la siguiente ruta: ./backend/microservicioPrediccion/ y ejecutamos "go run hello.go"
+    Esto comenzará el servicio de predicción
 
-### `npm run eject`
+### 2. Inicializar Nodos
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### `npm test`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### `npm run build`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### `npm run eject`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 3. Inicializar aplicación web
 
-## Learn More
+#### `npm install`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    Nos dirigimos a la ruta: ./frontend y ejecutamos "npm install"
+    Instalremos las dependencias que requiere el proyecto (axios, reactstrap)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### `npm start`
 
-### Code Splitting
+    Finalmente, en la misma ruta ejecutaremos "npm start" que levantará el servicio en el puerto 3000
+    Para acceder: "http://localhost:3000"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 4. Happy Predict
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    🤖🤖
