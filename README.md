@@ -140,11 +140,11 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
   
     El servicio backend ejectuandose en el contenedor
     
-    ![image](https://user-images.githubusercontent.com/26803331/142932237-51a12d17-ffcc-4cfc-a1d4-e3b3e42f5eb7.png)
+   ![image](https://user-images.githubusercontent.com/26803331/142932237-51a12d17-ffcc-4cfc-a1d4-e3b3e42f5eb7.png)
 
     El servicio frontend ejectuandose en el contenedor
     
-    ![image](https://user-images.githubusercontent.com/26803331/142932283-e4e69394-94aa-4c8c-ba11-ec4d2715759e.png)
+   ![image](https://user-images.githubusercontent.com/26803331/142932283-e4e69394-94aa-4c8c-ba11-ec4d2715759e.png)
 
     
     
