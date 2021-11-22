@@ -54,3 +54,69 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
 ### 4. Happy Predict
 
     🤖🤖
+    
+##CREACION DE NODOS Y CONEXION CON LOS MICROSERVICICIOS
+
+##PARA EJECUTAR LOS NODOS : \FINAL-CONCURRENTE\TF\backend\nodos
+###*Agrawala.go
+
+###cd backend
+###cd nodos
+###go run Agrawala.go
+##Inicializando el primer nodo
+###Declarar el localhost: 9001
+
+###Asignar la cantidad de nodos : 2
+
+###Declarar el puerto del primer nodo: 9002
+
+###Declarar el puerto del segundo nodo : 9003
+
+##Inicializando el segundo  nodo
+###Declarar el localhost: 9002
+
+###Asignar la cantidad de nodos : 2
+
+###Declarar el puerto del primer nodo: 9001
+
+###Declarar el puerto del segundo nodo : 9003
+
+##Inicializando el ultimo nodo
+###Declarar el localhost: 9003
+
+###Asignar la cantidad de nodos : 2
+
+###Declarar el puerto del primer nodo: 9001
+
+###Declarar el puerto del segundo nodo : 9002
+
+##  Ejecutar el Microservicio de entrenamiento
+
+###cd backend
+###cd microservicioEntrenamiento
+###cd src
+
+###go run hello.go
+
+##Acceder al api mediante el navegador
+
+###http://localhost:8000/register
+
+## Probar la conexion mediante el endpoint del microservicio
+
+###http://localhost:8000/training
+
+##La pagina enviara la peticion a los nodos
+
+##PROCESAR LOS SC DE LOS NODOS
+
+Presionar enter en el terminal donde los nodos fueron incializados
+
+##Confirmar la conexion mediante el terminal del API y el navegador
+
+![image](https://user-images.githubusercontent.com/26803331/142901161-063e2e64-d2f8-46a3-b9d8-0c0acf7f2a48.png)
+
+
+![image](https://user-images.githubusercontent.com/26803331/142901238-9485ebd9-b7f8-444e-acd9-eed7c7d9ff4f.png)
+
+
