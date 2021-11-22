@@ -51,69 +51,67 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
     Finalmente, en la misma ruta ejecutaremos "npm start" que levantará el servicio en el puerto 3000
     Para acceder: "http://localhost:3000"
 
-### 4. Happy Predict
-
-    🤖🤖
     
-### CREACION DE NODOS Y CONEXION CON LOS MICROSERVICICIOS
+### 4. CREACION DE NODOS Y CONEXION CON LOS MICROSERVICICIOS
 
-## PARA EJECUTAR LOS NODOS : \FINAL-CONCURRENTE\TF\backend\nodos
+#### PARA EJECUTAR LOS NODOS : \FINAL-CONCURRENTE\TF\backend\nodos
 *Agrawala.go
 
-### cd backend
-### cd nodos
-### go run Agrawala.go
-## Inicializando el primer nodo
+#### cd backend
+#### cd nodos
+#### go run Agrawala.go
 
-### Declarar el localhost: 9001
+### Inicializando el primer nodo
 
-### Asignar la cantidad de nodos : 2
+#### Declarar el localhost: 9001
 
-### Declarar el puerto del primer nodo: 9002
+#### Asignar la cantidad de nodos : 2
 
-### Declarar el puerto del segundo nodo : 9003
+#### Declarar el puerto del primer nodo: 9002
 
-## Inicializando el segundo  nodo
-### Declarar el localhost: 9002
+#### Declarar el puerto del segundo nodo : 9003
 
-### Asignar la cantidad de nodos : 2
+### Inicializando el segundo  nodo
+#### Declarar el localhost: 9002
 
-### Declarar el puerto del primer nodo: 9001
+#### Asignar la cantidad de nodos : 2
 
-### Declarar el puerto del segundo nodo : 9003
+#### Declarar el puerto del primer nodo: 9001
 
-## Inicializando el ultimo nodo
-### Declarar el localhost: 9003
+#### Declarar el puerto del segundo nodo : 9003
 
-### Asignar la cantidad de nodos : 2
+### Inicializando el ultimo nodo
+#### Declarar el localhost: 9003
 
-### Declarar el puerto del primer nodo: 9001
+#### Asignar la cantidad de nodos : 2
 
-### Declarar el puerto del segundo nodo : 9002
+#### Declarar el puerto del primer nodo: 9001
 
-##  Ejecutar el Microservicio de entrenamiento
+#### Declarar el puerto del segundo nodo : 9002
 
-### cd backend
-### cd microservicioEntrenamiento
-### cd src
+###  Ejecutar el Microservicio de entrenamiento
 
-### go run hello.go
+#### cd backend
+#### cd microservicioEntrenamiento
+#### cd src
 
-## Acceder al api mediante el navegador
+#### go run hello.go
 
-### http://localhost:8000/register
+### Acceder al api mediante el navegador
 
-## Probar la conexion mediante el endpoint del microservicio
+#### http://localhost:8000/register
 
-### http://localhost:8000/training
+### Probar la conexion mediante el endpoint del microservicio
 
-## La pagina enviara la peticion a los nodos
+#### http://localhost:8000/training
 
-## PROCESAR LOS SC DE LOS NODOS
+ La pagina enviara la peticion a los nodos
 
-Presionar enter en el terminal donde los nodos fueron incializados
+### 5.PROCESAR LOS SC DE LOS NODOS
 
-## Confirmar la conexion mediante el terminal del API y el navegador
+####Presionar enter en el terminal donde los nodos fueron incializados
+
+### Confirmar la conexion mediante el terminal del API y el navegador
 
 ![image](https://user-images.githubusercontent.com/26803331/142901161-063e2e64-d2f8-46a3-b9d8-0c0acf7f2a48.png)
 
@@ -121,3 +119,7 @@ Presionar enter en el terminal donde los nodos fueron incializados
 ![image](https://user-images.githubusercontent.com/26803331/142901238-9485ebd9-b7f8-444e-acd9-eed7c7d9ff4f.png)
 
 
+### 6. Happy Predict
+
+    🤖🤖
+    
