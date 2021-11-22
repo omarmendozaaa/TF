@@ -93,7 +93,6 @@ function Predict({mx}) {
   };
   useEffect(() => {
     FetchData();
-    Predecir();
   }, [id, modalAgregar]);
 
   return (
