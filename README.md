@@ -10,9 +10,12 @@ Utilizaremos regresión lineal simple, el cual es un algoritmo de aprendizaje su
 ## Motivación
 
 Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación del aire, por eso hemos encontrado distintos problemas en diferentes ámbitos los cuales afectan negativamente a muchos peruanos diariamente, los cuales son los siguientes:
-• Salud: Las consecuencias en la salud, las partículas PM2.5 y PM10 encontradas en el aire en los distintos distritos de Lima a ciertas horas del día como SO2, NO2, O3 y CO, repercuten negativamente en la salud cuando una persona se expone mucho a estas partículas, por eso una de nuestras motivaciones es poder saber que tan dañinas son estas cantidades de partículas a las que una persona está expuesta y que medidas deberían ser tomadas al respecto.
-• Económico: Al ser Lima la capital de nuestro país, el que este contaminada con este tipo de partículas es algo que impacta negativamente en campos como el turismo que tienen gran impacto en nuestra economía, por eso nuestra motivación en este ámbito sería el poder saber que distritos son los más contaminados y tomar medidas al respecto para no tener efectos negativos en el turismo y demás actividades económicas.
-• Social: La contaminación del aire al ser un problema de salud afecta a la calidad de vida de todos los ciudadanos residentes de los distintos distritos de Lima, nuestra motivación en este aspecto es el poder mejorar la calidad de vida erradicando o controlando el problema de la contaminación.
+
+<ol>
+  <li>Salud: Las consecuencias en la salud, las partículas PM2.5 y PM10 encontradas en el aire en los distintos distritos de Lima a ciertas horas del día como SO2, NO2, O3 y CO, repercuten negativamente en la salud cuando una persona se expone mucho a estas partículas, por eso una de nuestras motivaciones es poder saber que tan dañinas son estas cantidades de partículas a las que una persona está expuesta y que medidas deberían ser tomadas al respecto.</li>
+  <li>Económico: Al ser Lima la capital de nuestro país, el que este contaminada con este tipo de partículas es algo que impacta negativamente en campos como el turismo que tienen gran impacto en nuestra economía, por eso nuestra motivación en este ámbito sería el poder saber que distritos son los más contaminados y tomar medidas al respecto para no tener efectos negativos en el turismo y demás actividades económicas.</li>
+  <li>Social: La contaminación del aire al ser un problema de salud afecta a la calidad de vida de todos los ciudadanos residentes de los distintos distritos de Lima, nuestra motivación en este aspecto es el poder mejorar la calidad de vida erradicando o controlando el problema de la contaminación.</li>
+</ol>
 
 ## Arquitectura
 
