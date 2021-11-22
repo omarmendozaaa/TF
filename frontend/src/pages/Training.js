@@ -7,7 +7,7 @@ import {
 } from "../Services/Registers/RegisterService";
 import RegistroModal from "./Modals/RegistroModal";
 
-function Training() {
+function Training({ mx, setMx }) {
   const [registros, setRegistros] = useState([]);
   const [idRegistro, setIdRegistro] = useState();
 
@@ -16,8 +16,8 @@ function Training() {
   const [modalDetalle, setModalDetalle] = useState(false);
   const [modalEliminar, setModalEliminar] = useState(false);
 
-  const [mx, setMx] = useState({ m: "", c: "" });
-
+  const [istrain, setistrain] = useState(false);
+  const [loadingtrain, setLoadingtrain] = useState(true);
   const toggleAgregar = () => setModalAgregar(!modalAgregar);
 
   const toggleEditar = (idregistro) => {
@@ -33,11 +33,13 @@ function Training() {
     setIdRegistro(idregistro);
   };
 
-  const Entrenar = () =>
-    GetTraining().then((mx) => {
-      setMx(mx);
-    });
-
+  const Entrenar = async () => {
+  setistrain(!istrain);
+  await GetTraining().then((mx) => {
+    setMx(mx);
+    setLoadingtrain(!loadingtrain);
+  });
+  }
   const fetchData = () =>
     GetAllRegisters().then((registros) => {
       setRegistros(registros);
@@ -45,34 +47,36 @@ function Training() {
 
   useEffect(() => {
     fetchData();
-    Entrenar();
   }, [idRegistro, modalAgregar]);
 
   return (
     <div>
-      <RegistroModal
-        modal={modalAgregar}
-        toggle={toggleAgregar}
-        tipo={1}
-      ></RegistroModal>
-      <RegistroModal
-        modal={modalEditar}
-        toggle={toggleEditar}
-        tipo={2}
-        idRegistro={idRegistro}
-      ></RegistroModal>
-      <RegistroModal
-        modal={modalDetalle}
-        toggle={toggleDetalle}
-        tipo={3}
-        idRegistro={idRegistro}
-      ></RegistroModal>
-      <RegistroModal
-        modal={modalEliminar}
-        toggle={toggleEliminar}
-        tipo={4}
-        idRegistro={idRegistro}
-      ></RegistroModal>
+      <div Modals>
+        {" "}
+        <RegistroModal
+          modal={modalAgregar}
+          toggle={toggleAgregar}
+          tipo={1}
+        ></RegistroModal>
+        <RegistroModal
+          modal={modalEditar}
+          toggle={toggleEditar}
+          tipo={2}
+          idRegistro={idRegistro}
+        ></RegistroModal>
+        <RegistroModal
+          modal={modalDetalle}
+          toggle={toggleDetalle}
+          tipo={3}
+          idRegistro={idRegistro}
+        ></RegistroModal>
+        <RegistroModal
+          modal={modalEliminar}
+          toggle={toggleEliminar}
+          tipo={4}
+          idRegistro={idRegistro}
+        ></RegistroModal>
+      </div>
 
       <div className="page-content">
         <Content site="Entrenamiento" modulo="Registros" />
@@ -85,9 +89,13 @@ function Training() {
             >
               + Agregar Registro
             </Button>{" "}
-            <span
-              style={{ marginLeft: "10px" }}
-            >{`M: ${mx.m} C: ${mx.c}`}</span>
+            <Button size="sm" onClick={Entrenar}>
+              {" "}
+              💪 Entrenar{" "}
+            </Button>
+            <span hidden={!istrain} style={{ marginLeft: "10px" }}>
+              {loadingtrain ? "Cargando . . . " : `M: ${mx.m} C: ${mx.c}`}
+            </span>
           </div>
           <Table borderless responsive size="sm" striped>
             <thead>
