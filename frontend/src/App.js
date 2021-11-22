@@ -12,6 +12,7 @@ import { EsEntrenamiento } from "./Helpers/Utils";
 function App() {
   const [sidebar, setSidebar] = useState(true);
   const [RolId, setRolId] = useState(1);
+  const [mx, setMx] = useState({ m: "", c: "" });
 
   const showSidebar = () => setSidebar(!sidebar);
   const changeRol = (IdRol) => setRolId(IdRol);
@@ -22,7 +23,7 @@ function App() {
       <Navbar showSidebar={showSidebar} changeRol = {changeRol}/>
       <Routes>
         <Route path="/registros" element={<Dashboard/>} />
-        <Route path="/" element={EsEntrenamiento(Number(RolId)) ? <Training/> : <Predict/>}/>
+        <Route path="/" element={EsEntrenamiento(Number(RolId)) ? <Training mx={mx} setMx={setMx}/> : <Predict mx={mx}/>}/>
         <Route path="/reportes" element={<Reportes/>}/>
       </Routes>
     </BrowserRouter>

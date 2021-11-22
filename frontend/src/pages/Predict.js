@@ -13,7 +13,6 @@ import {
   Table,
 } from "reactstrap";
 import Content from "../components/Content/Content";
-import { GetTraining } from "../Services/Registers/RegisterService";
 import {
   DeleteData,
   GetAllData,
@@ -23,13 +22,12 @@ import {
   PutData,
 } from "../Services/Training/TrainingService";
 
-function Predict() {
+function Predict({mx}) {
   const [data, setData] = useState([]);
   const [predictions, setPredictions] = useState([]);
 
   const [id, SetId] = useState(Number);
   const [registro, SetRegistro] = useState(null);
-  const [mx, setMx] = useState({ m: "", c: "" });
 
   const [modalAgregar, setModalAgregar] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);
@@ -68,10 +66,6 @@ function Predict() {
     setModalEliminar(!modalEliminar);
     SetId(idData);
   };
-  const Entrenar = () =>
-    GetTraining().then((mx) => {
-      setMx(mx);
-    });
 
   const FetchData = () =>
     GetAllData().then((response) => {
@@ -91,7 +85,6 @@ function Predict() {
     toggleEliminar();
   };
   const Predecir = () => {
-    Entrenar();
     GetPredict(mx).then((response) => {
       console.log(response);
       setPredictions(response);
