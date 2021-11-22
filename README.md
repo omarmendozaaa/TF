@@ -116,7 +116,48 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
 
     Finalmente, en la misma ruta ejecutaremos "npm start" que levantará el servicio en el puerto 3000
     Para acceder: "http://localhost:3000"
+    
+    
+### 7. Configuración de Contenedores
 
-### 7. Happy Predict
+#### Generar Dockerfile
+
+    En la ruta del directorio del servicio  generamos un dockerfile con la configuracion de nuestro microservicio
+ 
+ ####   Crear los contenedores de manera Local
+ 
+ #### `docker build -t username/userservice .`
+ 
+ ### Utilizar el dockercompose para ejecutar los 3 contenedores creados
+ 
+ ####  `docker-compose up.`
+ 
+     Utilizar el dockerapp para probar el contenedor
+   
+    ![image](https://user-images.githubusercontent.com/26803331/142931847-20678222-bfac-4b25-b1f5-95e41a836f45.png)
+
+ ### Verificar los servicios back y front end  en los navegadores
+  
+    El servicio backend ejectuandose en el contenedor
+    
+   ![image](https://user-images.githubusercontent.com/26803331/142932237-51a12d17-ffcc-4cfc-a1d4-e3b3e42f5eb7.png)
+
+    El servicio frontend ejectuandose en el contenedor
+    
+   ![image](https://user-images.githubusercontent.com/26803331/142932283-e4e69394-94aa-4c8c-ba11-ec4d2715759e.png)
+
+    
+    
+    
+    
+    
+    
+    
+
+    
+ 
+ 
+
+### 8. Happy Predict
 
     🤖🤖
