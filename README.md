@@ -33,32 +33,16 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
 
 ### 2. Inicializar Nodos
 
-#### `npm test`
-
-#### `npm run build`
-
-#### `npm run eject`
-
-### 3. Inicializar aplicación web
-
-#### `npm install`
-
-    Nos dirigimos a la ruta: ./frontend y ejecutamos "npm install"
-    Instalremos las dependencias que requiere el proyecto (axios, reactstrap)
-
-#### `npm start`
-
-    Finalmente, en la misma ruta ejecutaremos "npm start" que levantará el servicio en el puerto 3000
-    Para acceder: "http://localhost:3000"
-
-    
 ### 4. CREACION DE NODOS Y CONEXION CON LOS MICROSERVICICIOS
 
 #### PARA EJECUTAR LOS NODOS : \FINAL-CONCURRENTE\TF\backend\nodos
-*Agrawala.go
+
+\*Agrawala.go
 
 #### `cd backend`
+
 #### `cd nodos`
+
 #### `go run Agrawala.go`
 
 ### Inicializando el primer nodo
@@ -71,7 +55,7 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
 
 #### `Declarar el puerto del segundo nodo : 9003`
 
-### Inicializando el segundo  nodo
+### Inicializando el segundo nodo
 
 #### `Declarar el localhost: 9002`
 
@@ -83,7 +67,6 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
 
 ### Inicializando el ultimo nodo
 
-
 #### `Declarar el localhost: 9003`
 
 #### `Asignar la cantidad de nodos : 2`
@@ -92,10 +75,12 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
 
 #### `Declarar el puerto del segundo nodo : 9002`
 
-###  Ejecutar el Microservicio de entrenamiento
+### Ejecutar el Microservicio de entrenamiento
 
 #### `cd backend`
+
 #### `cd microservicioEntrenamiento`
+
 #### `cd src`
 
 #### `go run hello.go`
@@ -104,9 +89,9 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
 
 #### `http://localhost:8000/register`
 
-###  Probar la conexion mediante el endpoint del microservicio
+### Probar la conexion mediante el endpoint del microservicio
 
-####  `http://localhost:8000/training`
+#### `http://localhost:8000/training`
 
 #### `La pagina enviara la peticion a los nodos`
 
@@ -118,11 +103,20 @@ Para nuestra propuesta, hemos visto el panorama completo sobre la contaminación
 
 ![image](https://user-images.githubusercontent.com/26803331/142901161-063e2e64-d2f8-46a3-b9d8-0c0acf7f2a48.png)
 
-
 ![image](https://user-images.githubusercontent.com/26803331/142901238-9485ebd9-b7f8-444e-acd9-eed7c7d9ff4f.png)
 
+### 6. Inicializar aplicación web
 
-### 6. Happy Predict
+#### `npm install`
+
+    Nos dirigimos a la ruta: ./frontend y ejecutamos "npm install"
+    Instalremos las dependencias que requiere el proyecto (axios, reactstrap)
+
+#### `npm start`
+
+    Finalmente, en la misma ruta ejecutaremos "npm start" que levantará el servicio en el puerto 3000
+    Para acceder: "http://localhost:3000"
+
+### 7. Happy Predict
 
     🤖🤖
-    
