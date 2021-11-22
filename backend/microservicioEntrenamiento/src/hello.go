@@ -1,16 +1,20 @@
 package main
 
 import (
+	"bufio"
 	"encoding/csv"
+	"encoding/gob"
 	"encoding/json"
 	"fmt"
 	"image/color"
 	"io"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 	"gonum.org/v1/plot"
@@ -79,6 +83,11 @@ var registros = allRegisters{
 	},
 }
 
+func llamarNodoMaestro() {
+	con, _ := net.Dial("tcp", "localhost:9081")
+	defer con.Close()
+}
+
 func getReady(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w, r)
 	if (*r).Method == "OPTIONS" {
@@ -92,8 +101,38 @@ func getReady(w http.ResponseWriter, r *http.Request) {
 
 	var dataMatrix []xy
 	dataMatrix, _ = leerCSVdesdeURL(url)
-	//Tengo que ver si el usuario ha ingresado nuevos registros para el train
 
+	//Enviando al nodo
+	con, _ := net.Dial("tcp", "localhost:9080")
+	defer con.Close()
+
+	var arreglosNumeros []float64
+	for _, reg := range dataMatrix {
+		arreglosNumeros = append(arreglosNumeros, reg.x)
+		arreglosNumeros = append(arreglosNumeros, reg.y)
+	}
+
+	encoder := gob.NewEncoder(con)
+	encoder.Encode(arreglosNumeros)
+	//Fin del envío al nodo
+
+	//Recibiendo datos
+	ln, _ := net.Listen("tcp", "localhost:8010")
+	fmt.Println("INICIANDO LISTEN ")
+	defer ln.Close()
+	for {
+		con2, _ := ln.Accept()
+		data, _ := bufio.NewReader(con2).ReadString('\n')
+		message := strings.TrimSpace(data)
+		fmt.Println("response => ", message)
+		if message == "salida" {
+			break
+		}
+		defer con.Close()
+	}
+	//Fin del listen
+
+	//Tengo que ver si el usuario ha ingresado nuevos registros para el train
 	err := entrenamiento("out.png", dataMatrix)
 	if err != nil {
 		log.Fatalf("Could not plot data: %v", err)

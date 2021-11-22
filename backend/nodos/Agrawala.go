@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/gob"
 	"encoding/json"
 	"fmt"
 	"math/rand"
@@ -10,6 +11,10 @@ import (
 	"time"
 
 	"gonum.org/v1/plot/plotter"
+)
+
+const (
+	addrFather = "localhost:9001"
 )
 
 var addrs []string //libreta de direcciones de los nodos de la red
@@ -21,7 +26,8 @@ type Info struct {
 	Tipo       string
 	NumNodo    int
 	AddrNodo   string
-	Numeros    []float64
+	NumerosX   []float64
+	NumerosY   []float64
 	Pendiente  float64
 	Intercepto float64
 }
@@ -41,6 +47,10 @@ type MyInfo struct {
 	primero     bool
 	proxNum     int
 	proxAddr    string
+	NumerosX    []float64
+	NumerosY    []float64
+	Pendiente   float64
+	Intercepto  float64
 }
 
 var chIniciar chan bool //esperar que el nodo inicie su trabajo en SC
@@ -81,14 +91,22 @@ func main() {
 	//Valores del arreglo
 
 	var dataMatrix []xy
-	dataMatrix = append(dataMatrix, xy{1.0, 2.0})
-	dataMatrix = append(dataMatrix, xy{2.0, 4.0})
+	// dataMatrix = append(dataMatrix, xy{1.0, 2.0})
+	// dataMatrix = append(dataMatrix, xy{2.0, 4.0})
 
-	var arregloNumeros []float64
+	if direccion == addrFather {
+		ln, _ := net.Listen("tcp", "localhost:9080")
+		defer ln.Close()
+		con2, _ := ln.Accept()
+		dataMatrix = handle(con2)
+	}
+
+	var arregloNumerosX []float64
+	var arregloNumerosY []float64
 
 	for _, reg := range dataMatrix {
-		arregloNumeros = append(arregloNumeros, reg.x)
-		arregloNumeros = append(arregloNumeros, reg.y)
+		arregloNumerosX = append(arregloNumerosX, reg.x)
+		arregloNumerosY = append(arregloNumerosY, reg.y)
 	}
 	//Prueba-Incio
 	type mx struct {
@@ -97,7 +115,7 @@ func main() {
 	}
 
 	//var slopeIntercept mx
-	m, c := entrenamiento(dataMatrix)
+	// m, c := entrenamiento(dataMatrix)
 	//Puebra-Fin
 
 	//inicializar / crear canales
@@ -106,7 +124,7 @@ func main() {
 
 	//enviar un mensaje inicial
 	go func() {
-		chMyInfo <- MyInfo{0, true, 10000001, ""}
+		chMyInfo <- MyInfo{0, true, 10000001, "", arregloNumerosX, arregloNumerosY, 0, 0}
 	}()
 
 	//3.- Inicio del proceso //Rol Cliente
@@ -117,7 +135,7 @@ func main() {
 		bufferIn.ReadString('\n') //pausa
 
 		//crear la info a enviar
-		info := Info{"ENVIOTIKET", ticket, direccion, arregloNumeros, m, c}
+		info := Info{"ENVIOTIKET", ticket, direccion, arregloNumerosX, arregloNumerosY, 0, 0}
 		//notificar a todos los nodos de la bitácora
 		for _, addr := range addrs {
 			go enviar(addr, info)
@@ -188,6 +206,10 @@ func manejadorConexiones(con net.Conn) {
 
 		//actualiza en uno el contador
 		myInfo.contadorMsg++
+		if len(info.NumerosX) != 0 {
+			myInfo.NumerosX = info.NumerosX
+			myInfo.NumerosY = info.NumerosY
+		}
 
 		//retornar por el canal la info actualizada
 		go func() {
@@ -210,13 +232,15 @@ func manejadorConexiones(con net.Conn) {
 }
 
 func procesarSC() {
-	fmt.Print("Inicia las tareas de la SC")
+	fmt.Println("Inicia las tareas de la SC => ", direccion)
 	myInfo := <-chMyInfo
 
 	fmt.Println("Procesando la SC ")
 
 	if myInfo.proxAddr == "" {
 		fmt.Println("Soy el último nodo, SC Procesada!")
+		responderEntrenamiento("salida")
+
 	} else {
 		//notifica al nodo que le continua
 
@@ -224,6 +248,25 @@ func procesarSC() {
 
 		//enviar la notificación al próximo
 		info := Info{Tipo: "INICIAR"}
+
+		// // Comenzar entrenamiento
+		// var dataMatrix []xy
+		// for i := range info.NumerosX {
+		// 	dataMatrix = append(dataMatrix, xy{info.NumerosX[i], info.NumerosY[i]})
+		// }
+		// m, c := entrenamiento(dataMatrix)
+
+		// info.Pendiente = m
+		// info.Intercepto = c
+		// myInfo.Pendiente = m
+		// myInfo.Intercepto = c
+
+		// chMyInfo <- myInfo
+		// //retornar por el canal la info actualizada
+		// go func() {
+		// 	chMyInfo <- myInfo
+		// }()
+
 		enviar(myInfo.proxAddr, info)
 	}
 }
@@ -264,4 +307,26 @@ func gradienteDescendiente(xys plotter.XYs, pendiente, intercepto float64) (dp, 
 	n := float64(len(xys))
 	return 2 / n * dp, 2 / n * di
 
+}
+
+func responderEntrenamiento(message string) {
+	con, _ := net.Dial("tcp", "localhost:8010")
+	fmt.Fprintln(con, message)
+	defer con.Close()
+}
+
+func handle(con net.Conn) []xy {
+
+	defer con.Close()
+
+	var responseMatrix []xy
+
+	var numeros []float64
+	dec := gob.NewDecoder(con)
+	dec.Decode(&numeros)
+
+	for i := 0; i < len(numeros); i = i + 2 {
+		responseMatrix = append(responseMatrix, xy{numeros[i], numeros[i+1]})
+	}
+	return responseMatrix
 }
