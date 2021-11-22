@@ -2,11 +2,16 @@ package main
 
 import (
 	"bufio"
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"io"
+	"log"
 	"math/rand"
 	"net"
+	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"gonum.org/v1/plot/plotter"
@@ -80,24 +85,14 @@ func main() {
 
 	//Valores del arreglo
 
-	var dataMatrix []xy
-	dataMatrix = append(dataMatrix, xy{1.0, 2.0})
-	dataMatrix = append(dataMatrix, xy{2.0, 4.0})
-
-	var arregloNumeros []float64
-
-	for _, reg := range dataMatrix {
-		arregloNumeros = append(arregloNumeros, reg.x)
-		arregloNumeros = append(arregloNumeros, reg.y)
-	}
 	//Prueba-Incio
-	type mx struct {
-		ValueM string `json:"m"`
-		ValueC string `json:"c"`
-	}
-
+	//type mx struct {
+	//	ValueM string `json:"m"`
+	//	ValueC string `json:"c"`
+	//}
+	var arregloNumeros []float64
 	//var slopeIntercept mx
-	m, c := entrenamiento(dataMatrix)
+	m, c := 0.0, 0.0
 	//Puebra-Fin
 
 	//inicializar / crear canales
@@ -118,6 +113,7 @@ func main() {
 
 		//crear la info a enviar
 		info := Info{"ENVIOTIKET", ticket, direccion, arregloNumeros, m, c}
+
 		//notificar a todos los nodos de la bitácora
 		for _, addr := range addrs {
 			go enviar(addr, info)
@@ -132,6 +128,7 @@ func main() {
 func enviar(addr string, info Info) {
 	con, _ := net.Dial("tcp", addr)
 	defer con.Close()
+
 	//codificar el mensaje a enviar a los nodos
 	binfo, _ := json.Marshal(info)
 	//enviar
@@ -215,8 +212,32 @@ func procesarSC() {
 
 	fmt.Println("Procesando la SC ")
 
+	url := "https://raw.githubusercontent.com/omarmendozaaa/TF/Future/dataset/SI_contaminacion.csv"
+
+	var dataMatrix []xy
+	dataMatrix, _ = leerCSVdesdeURL(url)
+
+	//var dataMatrix []xy
+	//dataMatrix = append(dataMatrix, xy{1.0, 2.0})
+	//dataMatrix = append(dataMatrix, xy{2.0, 4.0})
+
+	/*var arregloNumeros []float64
+
+	for _, reg := range dataMatrix {
+		arregloNumeros = append(arregloNumeros, reg.x)
+		arregloNumeros = append(arregloNumeros, reg.y)
+	}*/
+
+	m, c := entrenamiento(dataMatrix)
+
 	if myInfo.proxAddr == "" {
 		fmt.Println("Soy el último nodo, SC Procesada!")
+		fmt.Println(m, c)
+
+		con3, _ := net.Dial("tcp", "localhost:8001")
+		defer con3.Close()
+
+		fmt.Fprintln(con3, m, c)
 	} else {
 		//notifica al nodo que le continua
 
@@ -227,6 +248,38 @@ func procesarSC() {
 		enviar(myInfo.proxAddr, info)
 	}
 }
+
+func leerCSVdesdeURL(url string) ([]xy, error) {
+	var xys2 []xy
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	reader := csv.NewReader(resp.Body)
+	reader.Comma = ','
+	c := 0
+	for {
+		record, err := reader.Read()
+		if c == 0 {
+			c = c + 1
+			continue
+		}
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		x, _ := strconv.ParseFloat(record[10], 64)
+		y, _ := strconv.ParseFloat(record[11], 64)
+		xys2 = append(xys2, xy{x, y})
+	}
+	return xys2, nil
+}
+
 func entrenamiento(xys []xy) (x, c float64) {
 
 	pxys := make(plotter.XYs, len(xys))
